@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Oneliner.io - online any code.</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+
+  <!-- Styles -->
+  <link href="toggle.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <script src="scripts/highlight.pack.js"></script>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-sm-12 col-md-10 col-lg-10">
+        <nav id="navigation" class="navbar navbar-expand-lg navbar-dark">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="/">Oneliner.io</a>
+          <span class="navbar-text mt-1">
+            Oneline any code.
+          </span>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Oneline
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#api" data-toggle="modal" data-target=".bd-api-modal-lg">Api</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#about"  data-toggle="modal" data-target=".bd-about-modal-lg">About</a>
+              </li>
+            </ul>
+            <form class="form-inline ml-2 my-2 my-lg-0">
+              <a class="btn btn-outline-success my-2 my-sm-0" href="https://goo.gl/forms/6JqsOqqbjAbcaHqF2" target="_blank">Suggestions!</a>
+            </form>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-3">
+    <div class="row justify-content-md-center">
+      <div class="col-sm-12 col-md-10 col-lg-10">
+        <!-- Editor  -->
+        <div id="editor"># Enter code here</div>
+        <div id="contollers">
+          <button type="button" id="generate-btn" class="btn btn-lg g-recaptcha" data-sitekey="6Lc6_0AUAAAAAN2YKp-9shUjZmAbz_xSdhWvVlA8"
+            data-callback='onSubmit' data-size="invisible" data-badge="bottomright">Generate
+            <i class="fa fa-refresh" id="loading" aria-hidden="true" style="display:none;"></i>
+          </button>
+          <div id="lang">
+            <div class="dropdown" id="language">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown-lang" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Auto Detect
+              </button>
+              <div class="dropdown-menu lang-menu" aria-labelledby="dropdown-lang">
+                <button class="dropdown-item" type="button" value="python">Python</button>
+                <button class="dropdown-item" type="button" value="php">PHP</button>
+                <button class="dropdown-item" type="button" value="javascript">Javascript</button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item" type="button" value="auto" selected>Auto Detect</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-md-center mt-4">
+      <div class="col-sm-12 col-md-10 col-lg-10">
+        <div id="oneline-result" style="/*display:none;*/">
+          <div id="oneline-result-editor">Result here</div>
+          <div id="res-controller">
+            <button type="button" id="copy-btn" class="btn" data-toggle="tooltip" title="Copied!">Copy</button>
+            <div id="toggle-env" data-env="Linux">
+              <label class="tgl">
+                <input type="checkbox" checked/>
+                <span class="tgl_body">
+                  <span class="tgl_switch"></span>
+                  <span class="tgl_track">
+                    <span class="tgl_bgd">Linux</span>
+                    <span class="tgl_bgd tgl_bgd-negative">Windows</span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg fixed-bottom justify-content-md-center navbar-dark" id="bottom-navigation">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="#api" data-toggle="modal" data-target=".bd-api-modal-lg">Api</a>
+        <a class="nav-item nav-link" href="#about" data-toggle="modal" data-target=".bd-about-modal-lg">About</a>
+        <a class="nav-item nav-link" href="#terms" data-toggle="modal" data-target=".bd-terms-modal-lg">Terms</a>
+        <span class="navbar-text">© 2018 oneliner.io all rights reserved</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal fade bd-api-modal-lg" tabindex="-1" role="dialog" aria-labelledby="apiModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="apiModalLabel">API</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Mailchimp Form Here
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade bd-about-modal-lg" tabindex="-1" role="dialog" aria-labelledby="aboutModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aboutModalLabel">About</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Our story.
+          Roeij @twitter @github
+          Agamm @twitter @medium
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade bd-terms-modal-lg" tabindex="-1" role="dialog" aria-labelledby="termsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="termsModalLabel">Terms</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <b>By using oneliner.io you accept these terms.</b> <br />
+            Oneliner.io is free to use. <br />
+            ONELINER.IO AND ITS OWNERS DON'T PROVIDE WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLY. IN NO EVENT SHALL THE OWNERS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+            DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE ONLINE TOOL OR THE USE OR OTHER DEALINGS IN THE
+            ONLINE TOOL. PLEASE USE AT YOUR OWN RISK.<br />
+            The owners  can modify these terms at any time without prior notice.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    /*
+                              Detects and returns language from current editor
+                            */
+    function detectLanguage(editor) {
+      var code = editor.getValue();
+      var detectedLang = hljs.highlightAuto(code).language;
+      if (detectedLang) {
+        return detectedLang;
+      }
+      return 'undefined';
+    }
+
+    /*
+    Api call to oneliner servers
+    */
+    function getOneline(code, lang, env, cb) {
+      var baseUrl = "https://akmx5ep5k9.execute-api.eu-west-1.amazonaws.com/dev/api/";
+      var url = baseUrl + lang + "/";
+      var recaptchaResponse = grecaptcha.getResponse();
+      // Show loading
+      loading = $("#loading");
+      loading.show();
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: JSON.stringify({
+          code: code,
+          recaptcha: recaptchaResponse
+        }),
+        contentType: "application/json",
+      }).done(function (onelined_code) {
+        loading.hide();
+        // TODO Roei did something stupid here just for the POC
+        if (onelined_code.bash.indexOf("ERROR") > -1) {
+          console.error("Error in the server side");
+          // TODO: add a better error message here
+        }
+        //TODO What happends if bash is not available?
+        // ANS: IDK, what are you purposing?
+        cb(onelined_code, lang)
+      });
+    }
+
+    // Out of scope for google captcha
+    function onSubmit() {
+      var editor = ace.edit("editor");
+      var onelineResult = $("#oneline-result");
+      onelineResult.hide();
+      var onelineResultEditor = ace.edit("oneline-result-editor");
+
+      console.log("Generating...");
+      var code = editor.getValue();
+      var lang = detectLanguage(editor);
+      var env = "bash";
+
+      getOneline(code, lang, env, function (onelined_code, lang) {
+        onelineResultEditor.setValue(onelined_code.bash);
+        onelineResultEditor.getSession().setMode("ace/mode/" + lang);
+        onelineResult.show();
+
+        // Save both envs in the DOM for later use, kind of like shared storage
+        $('<input>').attr({ type: 'hidden', id: 'env-bash', value: btoa(onelined_code.bash)}).appendTo('body');
+        $('<input>').attr({ type: 'hidden', id: 'env-batch', value: btoa(onelined_code.batch)}).appendTo('body');
+      });
+    }
+
+    (function () {
+      var editor = ace.edit("editor");
+      var langWrapper = $('#language');
+      var langOptions = $("#dropdown-lang");
+      var copyBtn = $("#copy-btn");
+      var onelineResultEditor = ace.edit("oneline-result-editor");
+      var detectLang = true;
+
+      /*
+        Initialize the editor
+          - Set theme
+          - Set font size
+          - Set visability settings
+      */
+      function initializeEditor(editor) {
+        editor.focus();
+        editor.setTheme("ace/theme/tomorrow_night_eighties"); //ace/theme/monokai, ace/theme/github
+        editor.setShowPrintMargin(false);
+        editor.setFontSize("101%");
+        editor.execCommand("gotolineend");
+        editor.renderer.setScrollMargin(12, 0);
+      }
+
+
+      /*
+        Initialize the editor
+          - Set the language and js initialization
+      */
+      function initializeDropdown(dropdownWrapper) {
+        dropdownWrapper.find('.dropdown-toggle').dropdown()
+
+        // Handle dropdown click
+        dropdownWrapper.find('.dropdown-item').click(function (e) {
+          var value = $(this).text();
+          var lang = $(this).val();
+          langOptions.text(value);
+
+          // Check if we are in auto detect mode
+          if (lang === "auto") {
+            detectLang = true;
+            return;
+          }
+
+          detectLang = false;
+          editor.getSession().setMode("ace/mode/" + lang);
+        });
+      }
+
+      /*
+        Initialize the result editor
+          - Set theme
+          - Set font size
+          - Set visability settings
+      */
+      function initializeResultEditor(editor) {
+        editor.setTheme("ace/theme/tomorrow_night_eighties");
+        editor.renderer.setShowGutter(false);
+        editor.setShowPrintMargin(false);
+        editor.renderer.setScrollMargin(6, 0);
+      }
+
+
+      /*
+        Automatically convert the editor
+      */
+      function initAutoHighlight(editor) {
+        editor.getSession().on('change', function () {
+          if (detectLang) {
+            var detectedLang = detectLanguage(editor);
+            if (detectedLang === 'undefined') {
+              langOptions.text("Trying to detect...");
+              return;
+            }
+            langOptions.text(detectedLang);
+            editor.getSession().setMode("ace/mode/" + detectedLang);
+          }
+        });
+      }
+
+
+      /*
+        Add events for the copy button for the result
+      */
+      function initCopyeBtn(onelineResultEditor) {
+        copyBtn.tooltip({
+          trigger: 'manual'
+        });
+        copyBtn.click(function () {
+          console.log("copying!");
+          var selectedOneline = onelineResultEditor.getValue()
+
+          // Hack to copy to clipboard
+          var temp = $("<input>");
+          $("body").append(temp);
+          temp.val(selectedOneline).select();
+          document.execCommand("Copy");
+          temp.remove();
+
+          copyBtn.tooltip('show');
+          setTimeout(function () {
+            copyBtn.tooltip('hide');
+          }, 500);
+        });
+      }
+
+      /*
+        Init the toggle buttom
+      */
+      function initToggleBtn(onelineResultEditor) {
+        $(".tgl_body").click(function () {
+          var toggleEnv = $("#toggle-env");
+          var env = toggleEnv.data("env");
+          var envId = "bash";
+
+          if (env == "Linux") {
+            env = "Windows";
+            envId = "batch";
+          } else {
+            env = "Linux";
+            envId = "bash";
+          }
+
+          toggleEnv.data("env", env)
+          console.log("Chaning to env: " + env);
+          var envResult = $("#env-" + envId).val();
+          onelineResultEditor.setValue(atob(envResult));
+        });
+      }
+
+      initializeEditor(editor);
+      initializeDropdown(langWrapper);
+      initAutoHighlight(editor);
+      initializeResultEditor(onelineResultEditor);
+      initCopyeBtn(onelineResultEditor);
+      initToggleBtn(onelineResultEditor)
+    })();
+  </script>
+</body>
+
+</html>

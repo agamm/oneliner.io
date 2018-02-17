@@ -1,0 +1,241 @@
+/* .grecaptcha-badge {
+        display: none;
+    } */
+
+body {
+    background-color: #171717;
+}
+
+#navigation .navbar {
+    background-color: transparent;
+}
+
+#navigation .navbar-brand {
+    font-size: 1.9rem;
+    font-family: 'Lobster', cursive;
+}
+
+#editor {
+    border-radius: 3px 3px 0px 3px;
+    box-shadow: 0px 0px 1px #6c6c6c;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 20em;
+    z-index: 1010;
+}
+
+#oneline-result-editor {
+    border-radius: 3px 3px 0px 3px;
+    box-shadow: 0px 0px 3px #6c6c6c;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 3.8em;
+}
+
+#contollers {
+    position: relative;
+    background-color: #23231d;
+    z-index: 1010;
+    top: 0px;
+    right: -1px;
+}
+
+#res-controller {
+    position: relative;
+    background-color: #23231d;
+    z-index: 1000;
+    top: 0px;
+    right: -1px;
+}
+
+#generate-btn {
+    float: right;
+    font-size: 1.13rem;
+    color: #ffffff;
+    background-color: #3c4144;
+    text-shadow: 0px 0px 1px #b9c7ce;
+    height: 45px;
+    width: 145px;
+    border-radius: 0px 0px 3px 0px;
+    cursor: pointer;
+    padding-top: 4px;
+}
+
+#generate-btn:hover {
+    background-color: #454b4e;
+    cursor: pointer;
+}
+
+#generate-btn:focus {
+    box-shadow: none;
+    border: 0;
+    cursor: pointer;
+}
+
+#generate-btn:active {
+    cursor: pointer;
+    background-color: #282c2e;
+    -moz-box-shadow: 0 0 10px #000000;
+    -webkit-box-shadow: 0 0 10px #000000;
+    box-shadow: 0 0 10px #000000;
+    border: 0;
+}
+
+#lang {
+    float: right;
+    max-width: 12em;
+    width: 100%;
+    background-color: #6c6c6c;
+    border: 2px solid #6c6c6c;
+    color: #e3e3e3;
+    padding: 0px 4px 3px;
+    border-top: none;
+    border-radius: 0px 0px 0px 3px;
+}
+
+#dropdown-lang {
+    width: 180px;
+    background-color: #6c6c6c;
+    border: 1px solid #6c6c6c;
+    box-shadow: none;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.dropdown-menu {
+    background-color: #6c6c6c;
+    color: #e3e3e3;
+    top: 2px !important;
+    left: -7px !important;
+}
+
+.lang-menu {
+    border-radius: 0 0 0.25rem .25rem;
+    min-width: 12.1rem;
+}
+
+.dropdown-item {
+    background-color: #6c6c6c;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.dropdown-item:active {
+    background-color: #bfbfbf;
+    outline: none;
+}
+
+.dropdown-divider {
+    border-top: 1px solid #636161;
+}
+
+#dropdown-lang:active #dropdown-lang:focus {
+    border: 1px solid #272822;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    width: 20px;
+    margin: 0;
+    border: 0;
+    height: 20px;
+    left: 4px;
+    position: relative;
+    top: 5px;
+    vertical-align: 0;
+    background-image: url(/images/arrow_down.png);
+    background-repeat: no-repeat;
+}
+
+.top-fix {
+    margin-top: 60px;
+}
+
+.btn-outline-success {
+    cursor: pointer;
+}
+
+#generate-btn i {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+#copy-btn {
+    float: right;
+    border-radius: 0px 0px 3px 0px;
+    background-color: #393f42;
+    color: #fffff0;
+    cursor: pointer;
+    border-left: 1px solid #313131;
+}
+
+#copy-btn:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+#copy-btn:active {
+    background-color: #23282a;
+}
+
+#bottom-navigation>.navbar-nav>a,
+#bottom-navigation>.navbar-nav>span {
+    color: #3f3f3f;
+}
+
+#toggle-env {
+    float: right;
+    width: 106px;
+    background-color: #353535;
+    border-radius: 0px 0px 0px 16px;
+}
+
+.fixed-bottom {
+    z-index: -2;
+}
+.grecaptcha-badge {
+    z-index: 0 !important;;
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+ ::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+ ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+ ::-webkit-scrollbar-thumb {
+    background: rgba(100, 100, 100, 0.8);
+}
+
+ ::-webkit-scrollbar-corner,
+ ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(100, 100, 100, 0.4);
+}
