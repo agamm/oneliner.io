@@ -198,6 +198,50 @@ body {
     border-radius: 0px 0px 0px 16px;
 }
 
+#signup {
+    background: #fff;
+    clear: left;
+    font: 14px Helvetica, Arial, sans-serif;
+  }
+  #signup input {
+    float: left;
+  }
+  #signup .subscribe {
+    margin-left: 6px;
+    border: none;
+    padding: 8px 15px 8px 15px;
+    background: #FF8500;
+    color: #fff;
+    box-shadow: 1px 1px 4px #DADADA;
+    -moz-box-shadow: 1px 1px 4px #DADADA;
+    -webkit-box-shadow: 1px 1px 4px #DADADA;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    cursor: pointer;
+  }
+  #signup .subscribe:hover {
+    background: rgb(247, 151, 50);
+  }
+  #signup .subscribe:active {
+    background: rgb(204, 107, 3);
+  }
+  #signup .email {
+    font: 13px Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid #C2C2C2;
+    box-shadow: 1px 1px 4px #EBEBEB;
+    -moz-box-shadow: 1px 1px 4px #EBEBEB;
+    -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding: 7px;
+    outline: none;
+  }
+
 .fixed-bottom {
     z-index: -2;
 }

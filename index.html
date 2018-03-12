@@ -144,37 +144,22 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="apiModalLabel">Request API Access</h5>
+          <h5 class="modal-title" id="apiModal">Request API Access</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <!-- Begin MailChimp Signup Form -->
-          <link href="//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
-          <style type="text/css">
-            #mc_embed_signup {
-              background: #fff;
-              clear: left;
-              font: 14px Helvetica, Arial, sans-serif;
-            }
-          </style>
-          <div id="mc_embed_signup">
-            <form action="https://Oneliner.us17.list-manage.com/subscribe/post?u=1c0a708cb2a461ce76f64b42a&amp;id=6c3cb0db74" method="post"
-              id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-              <div id="mc_embed_signup_scroll">
-                <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
-                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                  <input type="text" name="b_1c0a708cb2a461ce76f64b42a_6c3cb0db74" tabindex="-1" value="">
+          <form>
+            <div id="signup">
+                <div id="signup_scroll">
+                  <input type="email" value="" name="EMAIL" class="email" id="subscribe-email" placeholder="email address" required>
+                  <div class="clear">
+                    <input type="submit" value="I want API Access!" name="subscribe" id="subscribe-submit" class="subscribe button" onclick="subscribe()">
+                  </div>
                 </div>
-                <div class="clear">
-                  <input type="submit" value="I want API Access!" name="subscribe" id="mc-embedded-subscribe" class="button">
-                </div>
-              </div>
-            </form>
-          </div>
-
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -184,7 +169,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="aboutModalLabel">About</h5>
+          <h5 class="modal-title" id="aboutModal">About</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -216,7 +201,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="termsModalLabel">Terms</h5>
+          <h5 class="modal-title" id="termsModal">Terms</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -279,15 +264,33 @@
         }),
         contentType: "application/json",
       }).done(function (onelined_code) {
+        var error = onelined_code.hasOwnProperty("error");
         loading.hide();
         // TODO Roei did something stupid here just for the POC
-        if (onelined_code.bash.indexOf("ERROR") > -1) {
-          console.error("Error in the server side");
-          // TODO: add a better error message here
+        if (error) {
+          console.error("Error from the server side:", onelined_code.error);
         }
-        //TODO What happends if bash is not available?
-        // ANS: IDK, what are you purposing?
-        cb(onelined_code, lang)
+        cb(onelined_code, lang);
+      });
+    }
+
+    /*
+    Api call to subscribe 
+    */
+    function subscribe() {
+      var url = "https://akmx5ep5k9.execute-api.eu-west-1.amazonaws.com/dev/api/";
+      emailValue = $('#subscribe-email')[0].value;
+
+      $.ajax({
+      type: "POST",
+      url: url,
+        data: JSON.stringify({
+          reg_mail: emailValue
+        }),
+        contentType: "application/json",
+      }).done(function (onelined_code) {
+        alert('Thank you for your registration! We\'ll keep you posted!')
+        // TODO close the window
       });
     }
 
@@ -320,6 +323,7 @@
           id: 'env-batch',
           value: btoa(onelined_code.batch)
         }).appendTo('body');
+        grecaptcha.reset();
       });
     }
 
