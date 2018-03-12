@@ -6,6 +6,9 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Notebooks and Laptops News, Deals and Reviews" />
+  <meta name="keywords" content="Laptops, Notebooks, PCs, MacBooks, iPhone, iPad, Android, Windows 7" />
+  <meta name="robots" content="index, follow" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
@@ -131,7 +134,7 @@
         <a class="nav-item nav-link" href="#api" data-toggle="modal" data-target=".bd-api-modal-lg">Api</a>
         <a class="nav-item nav-link" href="#about" data-toggle="modal" data-target=".bd-about-modal-lg">About</a>
         <a class="nav-item nav-link" href="#terms" data-toggle="modal" data-target=".bd-terms-modal-lg">Terms</a>
-        <span class="navbar-text">© 2018 oneliner.io all rights reserved</span>
+        <span class="navbar-text">Â© 2018 oneliner.io all rights reserved</span>
       </div>
     </nav>
   </div>
@@ -191,16 +194,16 @@
             <div class="card bg-light mb-3" style="max-width: 18rem;">
                 <div class="card-header">Agam More</div>
                 <div class="card-body">
-                  <h5 class="card-title">Developer and Product Creator</h5>
-                  <p class="card-text">You can find more about me here: <a href="https://medium.com/@agammore" target="_blank">@medium</a> <a href="https://twitter.com/agammore" target="_blank">@twitter</a> <a href="https://www.linkedin.com/in/agamm/" target="_blank">@linkedin</a></p>
+                  <h5 class="card-title">Developer and product creator</h5>
+                  <p class="card-text">You can find more about me here: <a href="https://medium.com/@agammore" target="_blank">@medium</a> <a href="https://twitter.com/agam360" target="_blank">@twitter</a> <a href="https://www.linkedin.com/in/agamm/" target="_blank">@linkedin</a></p>
                 </div>
               </div>
 
               <div class="card bg-light mb-3" style="max-width: 18rem;">
-                  <div class="card-header">Roei Jacobovich</div>
+                  <div class="card-header">Roej</div>
                   <div class="card-body">
-                    <h5 class="card-title">Developer and Security Researcher</h5>
-                    <p class="card-text">You can find more about me here: <a href="https://twitter.com/roeij" target="_blank">@twitter</a> <a href="https://www.linkedin.com/in/roei-jacobovich-5b3b9ab6/" target="_blank">@linkedin</a></p>
+                    <h5 class="card-title">...</h5>
+                    <p class="card-text">You can find more about me here: <a href="" target="_blank">@twitter</a> <a href="" target="_blank"git>@linkedin</a></p>
                   </div>
                 </div>
                 </div>
@@ -243,9 +246,10 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js" type="text/javascript" charset="utf-8"></script>
   <script>
+    var detectLang = true;
     /*
-                                  Detects and returns language from current editor
-                                */
+      Detects and returns language from current editor
+    */
     function detectLanguage(editor) {
       var code = editor.getValue();
       var detectedLang = hljs.highlightAuto(code).language;
@@ -296,7 +300,8 @@
 
       console.log("Generating...");
       var code = editor.getValue();
-      var lang = detectLanguage(editor);
+      var lang = (!detectLang) ? $('#dropdown-lang').text().toLowerCase() : detectLanguage(editor);
+      console.log(lang);
       var env = "bash";
 
       getOneline(code, lang, env, function (onelined_code, lang) {
@@ -324,7 +329,7 @@
       var langOptions = $("#dropdown-lang");
       var copyBtn = $("#copy-btn");
       var onelineResultEditor = ace.edit("oneline-result-editor");
-      var detectLang = true;
+      
 
       /*
         Initialize the editor
@@ -362,6 +367,7 @@
           }
 
           detectLang = false;
+          console.log(detectLang);
           editor.getSession().setMode("ace/mode/" + lang);
         });
       }
