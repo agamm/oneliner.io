@@ -358,6 +358,12 @@
       var copyBtn = $("#copy-btn");
       var onelineResultEditor = ace.edit("oneline-result-editor");
       
+      /* 
+        Check if we are dealing with a bad mobile user
+      */
+      function isMobile(){
+        return /Mobi/i.test(navigator.userAgent);
+      }
 
       /*
         Initialize the editor
@@ -410,7 +416,8 @@
         editor.setTheme("ace/theme/tomorrow_night_eighties");
         editor.renderer.setShowGutter(false);
         editor.setShowPrintMargin(false);
-        editor.renderer.setScrollMargin(6, 0);
+        if(!isMobile())
+          editor.renderer.setScrollMargin(6, 0);
       }
 
 
