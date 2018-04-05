@@ -429,7 +429,7 @@
               return;
             }
             langOptions.text(detectedLang);
-            editor.getSession().setMode("ace/mode/" + detectedLang);
+            //editor.getSession().setMode("ace/mode/" + detectedLang);
           }
         });
       }
@@ -484,12 +484,12 @@
         });
       }
 
-      /*initializeEditor(editor);
+      initializeEditor(editor);
       initializeDropdown(langWrapper);
       initAutoHighlight(editor);
       initializeResultEditor(onelineResultEditor);
       initCopyeBtn(onelineResultEditor);
-      initToggleBtn(onelineResultEditor);*/
+      initToggleBtn(onelineResultEditor);
     })();
   </script>
 </body>
