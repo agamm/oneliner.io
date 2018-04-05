@@ -371,10 +371,10 @@
       function initializeEditor(editor) {
         editor.focus();
         editor.setTheme("ace/theme/tomorrow_night_eighties"); //ace/theme/monokai, ace/theme/github
-        /*editor.setShowPrintMargin(false);
+        editor.setShowPrintMargin(false);
         editor.setFontSize("101%");
         editor.execCommand("gotolineend");
-        editor.renderer.setScrollMargin(12, 0);*/
+        editor.renderer.setScrollMargin(12, 0);
       }
 
 
@@ -411,9 +411,9 @@
       */
       function initializeResultEditor(editor) {
         editor.setTheme("ace/theme/tomorrow_night_eighties");
-        /*editor.renderer.setShowGutter(false);
+        editor.renderer.setShowGutter(false);
         editor.setShowPrintMargin(false);
-        editor.renderer.setScrollMargin(6, 0);*/
+        editor.renderer.setScrollMargin(6, 0);
       }
 
 
@@ -484,12 +484,12 @@
         });
       }
 
-      initializeEditor(editor);
+      /*initializeEditor(editor);
       initializeDropdown(langWrapper);
       initAutoHighlight(editor);
       initializeResultEditor(onelineResultEditor);
       initCopyeBtn(onelineResultEditor);
-      initToggleBtn(onelineResultEditor)
+      initToggleBtn(onelineResultEditor);*/
     })();
   </script>
 </body>
