@@ -331,7 +331,11 @@
         onelineResultEditor.getSession().setMode("ace/mode/" + lang);
         onelineResult.show();
 
+        console.log(onelined_code)
+
         // Save both envs in the DOM for later use, kind of like shared storage
+        $('#env-bash').remove();
+        $('#env-batch').remove();
         $('<input>').attr({
           type: 'hidden',
           id: 'env-bash',
@@ -342,6 +346,7 @@
           id: 'env-batch',
           value: btoa(onelined_code.batch)
         }).appendTo('body');
+
         grecaptcha.reset();
       });
     }
