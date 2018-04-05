@@ -249,6 +249,17 @@ body {
     z-index: 0 !important;;
 }
 
+.modal-content .error {
+    background-color: #f5b9c4;
+}
+
+.modal-header .error {
+    background-color: #f5b9c4;
+    border-bottom: 1px solid #da9aa5;
+    color: #440000;
+}
+
+
 @keyframes spin {
     from {
         transform: scale(1) rotate(0deg);
