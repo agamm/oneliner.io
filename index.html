@@ -323,15 +323,12 @@
       console.log("Generating...");
       var code = editor.getValue();
       var lang = (!detectLang) ? $('#dropdown-lang').text().toLowerCase() : detectLanguage(editor);
-      console.log(lang);
       var env = "bash";
 
       getOneline(code, lang, env, function (onelined_code, lang) {
         onelineResultEditor.setValue(onelined_code.bash);
         onelineResultEditor.getSession().setMode("ace/mode/" + lang);
         onelineResult.show();
-
-        console.log(onelined_code)
 
         // Save both envs in the DOM for later use, kind of like shared storage
         $('#env-bash').remove();
@@ -374,10 +371,10 @@
       function initializeEditor(editor) {
         editor.focus();
         editor.setTheme("ace/theme/tomorrow_night_eighties"); //ace/theme/monokai, ace/theme/github
-        editor.setShowPrintMargin(false);
+        /*editor.setShowPrintMargin(false);
         editor.setFontSize("101%");
         editor.execCommand("gotolineend");
-        editor.renderer.setScrollMargin(12, 0);
+        editor.renderer.setScrollMargin(12, 0);*/
       }
 
 
@@ -414,10 +411,9 @@
       */
       function initializeResultEditor(editor) {
         editor.setTheme("ace/theme/tomorrow_night_eighties");
-        editor.renderer.setShowGutter(false);
+        /*editor.renderer.setShowGutter(false);
         editor.setShowPrintMargin(false);
-        if(!isMobile())
-          editor.renderer.setScrollMargin(6, 0);
+        editor.renderer.setScrollMargin(6, 0);*/
       }
 
 
