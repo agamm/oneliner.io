@@ -249,7 +249,104 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="text/javascript" charset="utf-8"></script>
   <script>
- 
+    var detectLang = true;
+    /*
+      Detects and returns language from current editor
+    */
+    function detectLanguage(editor) {
+      var code = editor.getValue();
+      var detectedLang = hljs.highlightAuto(code).language;
+      if (detectedLang) {
+        return detectedLang;
+      }
+      return 'undefined';
+    }
+
+    /*
+    Api call to oneliner servers
+    */
+    function getOneline(code, lang, env, cb) {
+      var baseUrl = "https://akmx5ep5k9.execute-api.eu-west-1.amazonaws.com/dev/api/";
+      var url = baseUrl + lang + "/";
+      var recaptchaResponse = grecaptcha.getResponse();
+      // Show loading
+      loading = $("#loading");
+      loading.show();
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: JSON.stringify({
+          code: code,
+          recaptcha: recaptchaResponse
+        }),
+        contentType: "application/json",
+      }).done(function (onelined_code) {
+        var error = onelined_code.hasOwnProperty("error");
+        loading.hide();
+        if (error) {
+          console.error("Error from the server side:", onelined_code.error);
+          $('#errorModal').modal('show').find('#errorModalContents').text(onelined_code.error);
+        } else {
+          cb(onelined_code, lang);
+        }
+      });
+    }
+
+    /*
+    Api call to subscribe 
+    */
+    function subscribe() {
+      var url = "https://akmx5ep5k9.execute-api.eu-west-1.amazonaws.com/dev/api/";
+      emailValue = $('#subscribe-email')[0].value;
+
+      $.ajax({
+      type: "POST",
+      url: url,
+        data: JSON.stringify({
+          reg_mail: emailValue
+        }),
+        contentType: "application/json",
+      }).done(function (onelined_code) {
+        alert('Thank you for your registration! We\'ll keep you posted!')
+        // TODO close the window
+      });
+    }
+
+    // Out of scope for google captcha
+    function onSubmit() {
+      var editor = ace.edit("editor");
+      var onelineResult = $("#oneline-result");
+      onelineResult.hide();
+      var onelineResultEditor = ace.edit("oneline-result-editor");
+
+      console.log("Generating...");
+      var code = editor.getValue();
+      var lang = (!detectLang) ? $('#dropdown-lang').text().toLowerCase() : detectLanguage(editor);
+      var env = "bash";
+
+      getOneline(code, lang, env, function (onelined_code, lang) {
+        onelineResultEditor.setValue(onelined_code.bash);
+        onelineResultEditor.getSession().setMode("ace/mode/" + lang);
+        onelineResult.show();
+
+        // Save both envs in the DOM for later use, kind of like shared storage
+        $('#env-bash').remove();
+        $('#env-batch').remove();
+        $('<input>').attr({
+          type: 'hidden',
+          id: 'env-bash',
+          value: btoa(onelined_code.bash)
+        }).appendTo('body');
+        $('<input>').attr({
+          type: 'hidden',
+          id: 'env-batch',
+          value: btoa(onelined_code.batch)
+        }).appendTo('body');
+
+        grecaptcha.reset();
+      });
+    }
 
     (function () {
       var editor = ace.edit("editor");
@@ -281,8 +378,118 @@
       }
 
 
+      /*
+        Initialize the editor
+          - Set the language and js initialization
+      */
+      function initializeDropdown(dropdownWrapper) {
+        dropdownWrapper.find('.dropdown-toggle').dropdown()
+
+        // Handle dropdown click
+        dropdownWrapper.find('.dropdown-item').click(function (e) {
+          var value = $(this).text();
+          var lang = $(this).val();
+          langOptions.text(value);
+
+          // Check if we are in auto detect mode
+          if (lang === "auto") {
+            detectLang = true;
+            return;
+          }
+
+          detectLang = false;
+          console.log(detectLang);
+          editor.getSession().setMode("ace/mode/" + lang);
+        });
+      }
+
+      /*
+        Initialize the result editor
+          - Set theme
+          - Set font size
+          - Set visability settings
+      */
+      function initializeResultEditor(editor) {
+        editor.setTheme("ace/theme/tomorrow_night_eighties");
+        editor.renderer.setShowGutter(false);
+        editor.setShowPrintMargin(false);
+        editor.renderer.setScrollMargin(6, 0);
+      }
+
+
+      /*
+        Automatically convert the editor
+      */
+      function initAutoHighlight(editor) {
+        editor.getSession().on('change', function () {
+          if (detectLang) {
+            var detectedLang = detectLanguage(editor);
+            if (detectedLang === 'undefined') {
+              langOptions.text("Trying to detect...");
+              return;
+            }
+            langOptions.text(detectedLang);
+            editor.getSession().setMode("ace/mode/" + detectedLang);
+          }
+        });
+      }
+
+
+      /*
+        Add events for the copy button for the result
+      */
+      function initCopyeBtn(onelineResultEditor) {
+        copyBtn.tooltip({
+          trigger: 'manual'
+        });
+        copyBtn.click(function () {
+          console.log("copying!");
+          var selectedOneline = onelineResultEditor.getValue()
+
+          // Hack to copy to clipboard
+          var temp = $("<input>");
+          $("body").append(temp);
+          temp.val(selectedOneline).select();
+          document.execCommand("Copy");
+          temp.remove();
+
+          copyBtn.tooltip('show');
+          setTimeout(function () {
+            copyBtn.tooltip('hide');
+          }, 500);
+        });
+      }
+
+      /*
+        Init the toggle buttom
+      */
+      function initToggleBtn(onelineResultEditor) {
+        $(".tgl_body").click(function () {
+          var toggleEnv = $("#toggle-env");
+          var env = toggleEnv.data("env");
+          var envId = "bash";
+
+          if (env == "Linux") {
+            env = "Windows";
+            envId = "batch";
+          } else {
+            env = "Linux";
+            envId = "bash";
+          }
+
+          toggleEnv.data("env", env)
+          console.log("Chaning to env: " + env);
+          var envResult = $("#env-" + envId).val();
+          onelineResultEditor.setValue(atob(envResult));
+        });
+      }
 
       initializeEditor(editor);
+      initializeDropdown(langWrapper);
+      initAutoHighlight(editor);
+      initializeResultEditor(onelineResultEditor);
+      initCopyeBtn(onelineResultEditor);
+      initToggleBtn(onelineResultEditor);
     })();
   </script>
 </body>
