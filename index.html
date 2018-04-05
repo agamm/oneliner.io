@@ -484,6 +484,9 @@
         });
       }
 
+      if(isMobile()) {
+        $('#errorModal').modal('show').find('#errorModalContents').html("Yo dwag, please use oneliner.io from a desktop PC. <br> Who needs to oneline code via his mobile phone?!");
+      }
       initializeEditor(editor);
       initializeDropdown(langWrapper);
       initAutoHighlight(editor);
