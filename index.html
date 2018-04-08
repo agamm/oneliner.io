@@ -82,7 +82,7 @@
         <!-- Editor  -->
         <div id="editor"># Enter code here</div>
         <div id="contollers">
-          <button type="button" id="generate-btn" class="btn btn-lg" data-callback='onSubmit'>Generate
+          <button type="button" id="generate-btn" class="btn btn-lg">Generate
             <i class="fa fa-refresh" id="loading" aria-hidden="true" style="display:none;"></i>
           </button>
           <div id="lang">
@@ -257,47 +257,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="text/javascript" charset="utf-8"></script>
   <script>
-    var detectLang = true;
-    /*
-      Detects and returns language from current editor
-    */
-    function detectLanguage(editor) {
-      var code = editor.getValue();
-      var detectedLang = hljs.highlightAuto(code).language;
-      if (detectedLang) {
-        return detectedLang;
-      }
-      return 'undefined';
-    }
-
-    /*
-    Api call to oneliner servers
-    */
-    function getOneline(code, lang, env, cb) {
-      var baseUrl = "https://akmx5ep5k9.execute-api.eu-west-1.amazonaws.com/dev/api/";
-      var url = baseUrl + lang + "/";
-      // Show loading
-      loading = $("#loading");
-      loading.show();
-
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: JSON.stringify({
-          code: code
-        }),
-        contentType: "application/json",
-      }).done(function (onelined_code) {
-        var error = onelined_code.hasOwnProperty("error");
-        loading.hide();
-        if (error) {
-          console.error("Error from the server side:", onelined_code.error);
-          $('#errorModal').modal('show').find('#errorModalContents').text(onelined_code.error);
-        } else {
-          cb(onelined_code, lang);
-        }
-      });
-    }
+    
 
     /*
     Api call to subscribe 
@@ -319,38 +279,7 @@
       });
     }
 
-    function onSubmit() {
-      var editor = ace.edit("editor");
-      var onelineResult = $("#oneline-result");
-      onelineResult.hide();
-      var onelineResultEditor = ace.edit("oneline-result-editor");
 
-      console.log("Generating...");
-      var code = editor.getValue();
-      var lang = (!detectLang) ? $('#dropdown-lang').text().toLowerCase() : detectLanguage(editor);
-      var env = "bash";
-
-      getOneline(code, lang, env, function (onelined_code, lang) {
-        onelineResultEditor.setValue(onelined_code.bash);
-        onelineResultEditor.getSession().setMode("ace/mode/" + lang);
-        onelineResult.show();
-
-        // Save both envs in the DOM for later use, kind of like shared storage
-        $('#env-bash').remove();
-        $('#env-batch').remove();
-        $('<input>').attr({
-          type: 'hidden',
-          id: 'env-bash',
-          value: btoa(onelined_code.bash)
-        }).appendTo('body');
-        $('<input>').attr({
-          type: 'hidden',
-          id: 'env-batch',
-          value: btoa(onelined_code.batch)
-        }).appendTo('body');
-
-      });
-    }
 
     (function () {
       var editor = ace.edit("editor");
@@ -358,7 +287,84 @@
       var langOptions = $("#dropdown-lang");
       var copyBtn = $("#copy-btn");
       var onelineResultEditor = ace.edit("oneline-result-editor");
+
+      var detectLang = true;
+    /*
+      Detects and returns language from current editor
+    */
+      function detectLanguage(editor) {
+        var code = editor.getValue();
+        var detectedLang = hljs.highlightAuto(code).language;
+        if (detectedLang) {
+          return detectedLang;
+        }
+        return 'undefined';
+      }
+
+    /*
+    Api call to oneliner servers
+    */
+      function getOneline(code, lang, env, cb) {
+        var baseUrl = "https://akmx5ep5k9.execute-api.eu-west-1.amazonaws.com/dev/api/";
+        var url = baseUrl + lang + "/";
+        // Show loading
+        loading = $("#loading");
+        loading.show();
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: JSON.stringify({
+            code: code
+          }),
+          contentType: "application/json",
+        }).done(function (onelined_code) {
+          var error = onelined_code.hasOwnProperty("error");
+          loading.hide();
+          if (error) {
+            console.error("Error from the server side:", onelined_code.error);
+            $('#errorModal').modal('show').find('#errorModalContents').text(onelined_code.error);
+          } else {
+            cb(onelined_code, lang);
+          }
+        });
+      }
       
+      function onSubmit() {
+        var editor = ace.edit("editor");
+        var onelineResult = $("#oneline-result");
+        onelineResult.hide();
+        var onelineResultEditor = ace.edit("oneline-result-editor");
+
+        console.log("Generating...");
+        var code = editor.getValue();
+        var lang = (!detectLang) ? $('#dropdown-lang').text().toLowerCase() : detectLanguage(editor);
+
+        var env = "bash";
+
+        getOneline(code, lang, env, function (onelined_code, lang) {
+          onelineResultEditor.setValue(onelined_code.bash);
+          onelineResultEditor.getSession().setMode("ace/mode/" + lang);
+          onelineResult.show();
+
+          // Save both envs in the DOM for later use, kind of like shared storage
+          $('#env-bash').remove();
+          $('#env-batch').remove();
+          $('<input>').attr({
+            type: 'hidden',
+            id: 'env-bash',
+            value: btoa(onelined_code.bash)
+          }).appendTo('body');
+          $('<input>').attr({
+            type: 'hidden',
+            id: 'env-batch',
+            value: btoa(onelined_code.batch)
+          }).appendTo('body');
+
+        });
+      }
+    
+
       /* 
         Check if we are dealing with a bad mobile user
       */
@@ -497,6 +503,7 @@
       initializeResultEditor(onelineResultEditor);
       initCopyeBtn(onelineResultEditor);
       initToggleBtn(onelineResultEditor);
+      $("#generate-btn").click(onSubmit);
     })();
   </script>
 </body>
