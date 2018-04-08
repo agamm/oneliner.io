@@ -25,7 +25,6 @@
   <link href="style.css" rel="stylesheet">
 
   <script src="scripts/highlight.pack.js"></script>
-  <script src='https://www.google.com/recaptcha/api.js'></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58168863-8"></script>
@@ -83,8 +82,7 @@
         <!-- Editor  -->
         <div id="editor"># Enter code here</div>
         <div id="contollers">
-          <button type="button" id="generate-btn" class="btn btn-lg g-recaptcha" data-sitekey="6Lc6_0AUAAAAAN2YKp-9shUjZmAbz_xSdhWvVlA8"
-            data-callback='onSubmit' data-size="invisible" data-badge="bottomright">Generate
+          <button type="button" id="generate-btn" class="btn btn-lg" data-callback='onSubmit'>Generate
             <i class="fa fa-refresh" id="loading" aria-hidden="true" style="display:none;"></i>
           </button>
           <div id="lang">
@@ -276,7 +274,6 @@
     function getOneline(code, lang, env, cb) {
       var baseUrl = "https://akmx5ep5k9.execute-api.eu-west-1.amazonaws.com/dev/api/";
       var url = baseUrl + lang + "/";
-      var recaptchaResponse = grecaptcha.getResponse();
       // Show loading
       loading = $("#loading");
       loading.show();
@@ -285,8 +282,7 @@
         type: "POST",
         url: url,
         data: JSON.stringify({
-          code: code,
-          recaptcha: recaptchaResponse
+          code: code
         }),
         contentType: "application/json",
       }).done(function (onelined_code) {
@@ -321,7 +317,6 @@
       });
     }
 
-    // Out of scope for google captcha
     function onSubmit() {
       var editor = ace.edit("editor");
       var onelineResult = $("#oneline-result");
@@ -352,7 +347,6 @@
           value: btoa(onelined_code.batch)
         }).appendTo('body');
 
-        grecaptcha.reset();
       });
     }
 
